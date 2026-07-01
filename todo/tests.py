@@ -1,5 +1,4 @@
 from django.test import TestCase, Client
-from django.db import models
 from django.utils import timezone
 from datetime import datetime
 from todo.models import Task
@@ -35,11 +34,6 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
     posted_at = models.DateTimeField(default=timezone.now)
     due_at = models.DateTimeField(null=True, blank=True)
-
-    def is_overdue(self, dt):
-        if self.due_at is None:
-            return False
-        return self.due_at < dt
 
     def test_is_overdue_future(self):
         due = timezone.make_aware(datetime(2024, 6, 30, 23, 59, 59))
